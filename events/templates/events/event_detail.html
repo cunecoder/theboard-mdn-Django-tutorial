@@ -1,0 +1,18 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+  <h1>Title: {{ event.title }}</h1>
+
+  <!-- event detail link not yet defined -->
+  <p><strong>Short Description:</strong> {{ event.short_description }}</p>
+  <p><strong>Startdate:</strong> {{ event.startdate }}</p>
+  <p><strong>Location:</strong> {{ event.location }}</p>
+  <p><strong>Category:</strong> {{ event.category.all|join:", " }}</p>
+
+  <div style="margin-left:20px;margin-top:20px">
+    <h4>Copies</h4>
+
+    <p>This is just some filler text</p>
+    
+  </div>
+{% endblock %}

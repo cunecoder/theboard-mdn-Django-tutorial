@@ -1,0 +1,20 @@
+{% extends "base_generic.html" %}
+<!-- Add additional CSS in static file -->
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/styles.css' %}" />
+
+
+{% block content %}
+  <h1>TheBoard</h1>
+  <p>
+    Welcome to theboard, a website developed by
+    <em>David Marin</em>!
+  </p>
+  <h2>Dynamic content</h2>
+  <p>The library has the following record counts:</p>
+  <ul>
+    <li><strong>Total Events:</strong> {{ num_events }}</li>
+    <li><strong>Number of 'Sports' Events:</strong> {{ num_sport_events }}</li>
+    <li><strong>Number of 'Social' Events:</strong> {{ num_social_events }}</li>
+  </ul>
+{% endblock %}
