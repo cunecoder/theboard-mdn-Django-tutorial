@@ -5,10 +5,16 @@
   {% if event_list %}
     <ul>
       {% for event in event_list %}
-      <li>
-        <a href="{{ event.get_absolute_url }}">{{ event.title }}</a>
-        ({{event.short_description}})
-      </li>
+        <li>
+
+          <a href="{{ event.get_absolute_url }}">{{ event.title }}</a>
+          ({{event.short_description}})
+          <!-- Using forloop.last just for practice! -->
+          {% if forloop.last %}
+              <p>^^^This is the last event in the list!^^^</p>
+          {% endif %}
+        </li>
+
       {% endfor %}
     </ul>
   {% else %}

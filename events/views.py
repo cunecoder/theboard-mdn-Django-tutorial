@@ -31,11 +31,15 @@ def index(request):
 
 class EventListView(generic.ListView):
     model = Event
-    context_object_name = 'event_list'    # My own name for the list as a template var
-    
-    # Testing query set: Events that contain 'david' (insensitive case) in the title
+    # Only displays 10 events per page. Later, I might want to have an endless stream of events.
+    paginate_by = 10
+
+    # My own name for the list as a template var
+    context_object_name = 'event_list'
+
+    # Note: You can customize this to be a specific query set. Be creative! ;-)
     queryset = Event.objects.all()
-    # template name to go along with the query set
+    # Template name goes along with the query set
     template_name = 'events/event_list.html'
 
 class EventDetailView(generic.DetailView):
