@@ -17,4 +17,8 @@
     <li><strong>Number of 'Sports' Events:</strong> {{ num_sport_events }}</li>
     <li><strong>Number of 'Social' Events:</strong> {{ num_social_events }}</li>
   </ul>
+
+  <p>
+    You have visited this page {{ num_visits }} time{{ num_visits|pluralize }}.
+  </p>
 {% endblock %}

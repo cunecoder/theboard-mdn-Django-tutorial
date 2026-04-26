@@ -18,12 +18,18 @@ def index(request):
     # Number of Events where category is "Social"
     num_social_events = Event.objects.filter(category__name="Social").count()
 
+    # Number of visits to this view, as counted in the session variable.
+    num_visits = request.session.get('num_visits', 0)
+    num_visits += 1
+    request.session['num_visits'] = num_visits
+
     # Left side: var name in HTML (var_name you use in the .html files)
     # Right side: var name in this Python views file
     context = {
         'num_events': num_events,
         'num_sport_events': num_sport_events,
         'num_social_events': num_social_events,
+        'num_visits': num_visits,
     }
 
     # Redner the HTML template index.html with the data in the context var
