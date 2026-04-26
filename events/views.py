@@ -1,3 +1,8 @@
+# Personal note with this: You can use the @login_required decorator right on top of any
+# view definition that you want to be restricted only for logged-in users.
+from django.contrib.auth.decorators import login_required
+
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render
 from django.views import generic
 from .models import Event, Category

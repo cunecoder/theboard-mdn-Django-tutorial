@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils import timezone
 from django.urls import reverse # Used in get_absolute_url() to get URL for specified ID
+from django.conf import settings
 
 # Create your models here.
 class Category(models.Model):
