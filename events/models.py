@@ -27,6 +27,10 @@ class Event(models.Model):
     poster = models.ImageField(upload_to='posters/')
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True)
 
+    # Metadata
+    class Meta:
+        ordering = ['-title']
+
     # Model methods
     def __str__(self):
         """String for representing the Event object."""

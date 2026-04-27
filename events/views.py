@@ -2,9 +2,12 @@
 # view definition that you want to be restricted only for logged-in users.
 from django.contrib.auth.decorators import login_required
 
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import render
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.views.generic import CreateView, UpdateView, DeleteView
 from django.views import generic
+from django.shortcuts import render
+from django.urls import reverse_lazy
+from events.forms import forms, EventForm
 from .models import Event, Category
 
 # Create your views here.
@@ -55,3 +58,25 @@ class EventListView(generic.ListView):
 
 class EventDetailView(generic.DetailView):
     model = Event
+
+class EventCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
+    permission_required = (
+        'events.add_event',
+    )
+    model = Event
+    template_name = 'events/event_form.html'
+    form_class = EventForm
+    success_url = reverse_lazy('events:events')
+
+# Adding event update in case I want it for later
+class EventUpdateView(LoginRequiredMixin, UpdateView):
+    model = Event
+    template_name = 'events/event_form.html'
+    form_class = EventForm
+    success_url = reverse_lazy('events')
+
+# TODO: Only admin should be able to delete events
+class EventDeleteView(LoginRequiredMixin, DeleteView):
+    model = Event
+    template_name = 'events/event_confirm_delete.html'
+    success_url = reverse_lazy('events')

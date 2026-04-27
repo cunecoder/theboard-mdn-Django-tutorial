@@ -23,11 +23,12 @@ from django.views.generic import RedirectView
 # Use static() to add URL mapping to serve static files during development (only)
 from django.conf import settings
 from django.conf.urls.static import static
+from events import views
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('', views.index, name='index'),
     path('events/', include('events.urls')),
-    path('', RedirectView.as_view(url='events/', permanent=True)),
+    path('admin/', admin.site.urls),
     path('accounts/', include('django.contrib.auth.urls')),
 ]
 
