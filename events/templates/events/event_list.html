@@ -9,6 +9,13 @@
 
           <a href="{{ event.get_absolute_url }}">{{ event.title }}</a>
           ({{event.short_description}})
+          
+          <!-- Adding an edit event button for admin to see. -->
+          {% if perms.events.change_event %}
+            <a href="{% url 'event-update' event.pk %}">Edit</a>
+            <a href="{% url 'event-delete' event.pk %}">Delete</a>
+          {% endif %}
+
           <!-- Using forloop.last just for practice! -->
           {% if forloop.last %}
               <p>^^^This is the last event in the list!^^^</p>

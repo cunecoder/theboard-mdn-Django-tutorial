@@ -60,13 +60,20 @@ class EventDetailView(generic.DetailView):
     model = Event
 
 class EventCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
-    permission_required = (
-        'events.add_event',
-    )
     model = Event
     template_name = 'events/event_form.html'
     form_class = EventForm
-    success_url = reverse_lazy('events:events')
+    permission_required = ('events.add_event',)
+    # When a valid form completes, the user wil be rerouted to the view url called 'events'
+    success_url = reverse_lazy('events')
+    
+    def handle_no_permission(self):
+        """"Return a custom screen for a no-permission 403 error."""
+        return render(self.request, 'events/no_permission.html', status=403)
+
+    def form_invalid(self, form):
+        print(form.errors)
+        return super().form_invalid(form)
 
 # Adding event update in case I want it for later
 class EventUpdateView(LoginRequiredMixin, UpdateView):
@@ -74,6 +81,7 @@ class EventUpdateView(LoginRequiredMixin, UpdateView):
     template_name = 'events/event_form.html'
     form_class = EventForm
     success_url = reverse_lazy('events')
+
 
 # TODO: Only admin should be able to delete events
 class EventDeleteView(LoginRequiredMixin, DeleteView):
