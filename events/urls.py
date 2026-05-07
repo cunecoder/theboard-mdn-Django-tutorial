@@ -1,5 +1,7 @@
 # This is where we add patterns as we build the application
 from django.urls import path
+from django.conf import settings
+from django.conf.urls.static import static
 from . import views
 from .views import (
     EventDetailView, EventUpdateView, EventCreateView, EventDeleteView

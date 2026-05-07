@@ -4,12 +4,18 @@
   <form action="" method="post" enctype="multipart/form-data">
     {% csrf_token %}
 
+    {% if form.non_field_errors %}
+      {% for error in form.non_field_errors %}
+        <div style="background: #FCEBEB; color: #791F1F; border: 0.5px solid #F09595; border-radius: 8px; padding: 12px 16px; margin-bottom: 1rem; font-size: 14px;">
+          {{ error }}
+        </div>
+      {% endfor %}
+    {% endif %}
+
     <table>
     {{ form.as_table }}
     </table>
     
     <input type="submit" value="Submit">
   </form>
-
-  {{ form.errors }}
 {% endblock %}

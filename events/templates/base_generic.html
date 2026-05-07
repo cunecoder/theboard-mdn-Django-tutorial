@@ -10,60 +10,48 @@
       rel="stylesheet"
       integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
       crossorigin="anonymous">
-    <!-- Add additional CSS in static file -->
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/styles.css' %}" />
   </head>
   <body>
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-sm-2">
-          {% block sidebar %}
-            <ul class="sidebar-nav">
-              <li><a href="{% url 'index' %}">Home</a></li>
-              <li><a href="{% url 'events' %}">All Events</a></li>
-              <li><a href="">All authors</a></li>
 
-              {% if user.is_authenticated %}
-                <li>User: {{ user.get_username }}</li>
-                <li>
-                  <form id="logout-form" method="post" action="{% url 'logout' %}">
-                    {% csrf_token %}
-                    <button type="submit" class="btn btn-link">Logout</button>
-                  </form>
-                </li>
-              {% else %}
-                <li><a href="{% url 'login' %}?next={{ request.path }}">Login</a></li>
-              {% endif %}
-            </ul>
-
-
-          {% endblock sidebar %}
-        </div>
-        <div class="col-sm-10 ">
-          {% block content %}{% endblock content %}
-          
-          <!-- May want to delete the pagination part if I want to have an infinite carousel -->
-          {% block pagination %}
-            {% if is_paginated %}
-                <div class="pagination">
-                    <span class="page-links">
-                        {% if page_obj.has_previous %}
-                            <a href="{{ request.path }}?page={{ page_obj.previous_page_number }}">previous</a>
-                        {% endif %}
-                        <span class="page-current">
-                            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
-                        </span>
-                        {% if page_obj.has_next %}
-                            <a href="{{ request.path }}?page={{ page_obj.next_page_number }}">Next</a>
-                        {% endif %}
-                    </span>
-                </div>
-            {% endif %}
-          {% endblock pagination%}
-
-        </div>
+    {% block navbar %}
+    <nav style="border-bottom: 0.5px solid #e5e7eb; padding: 0 1.5rem; height: 52px; display: flex; align-items: center; justify-content: space-between;">
+      <div style="display: flex; align-items: center; gap: 2rem;">
+        <a href="{% url 'index' %}" style="font-size: 15px; font-weight: 500; color: #111827; text-decoration: none;">TheBoard</a>
+        <a href="{% url 'events' %}" style="font-size: 14px; color: #6b7280; text-decoration: none;">All Events</a>
       </div>
+      <div style="display: flex; align-items: center; gap: 1rem;">
+        {% if user.is_authenticated %}
+          <span style="font-size: 13px; color: #6b7280;">{{ user.get_username }}</span>
+          <form id="logout-form" method="post" action="{% url 'logout' %}" style="margin: 0;">
+            {% csrf_token %}
+            <button type="submit" style="background: none; border: 0.5px solid #e5e7eb; border-radius: 8px; font-size: 13px; color: #6b7280; padding: 5px 12px; cursor: pointer;">Logout</button>
+          </form>
+        {% else %}
+          <a href="{% url 'login' %}?next={{ request.path }}" style="background: #185FA5; color: #fff; font-size: 13px; font-weight: 500; padding: 6px 14px; border-radius: 8px; text-decoration: none;">Login</a>
+        {% endif %}
+      </div>
+    </nav>
+    {% endblock navbar %}
+
+    <div style="padding: 0 1rem;">
+      {% block content %}{% endblock content %}
+
+      {% block pagination %}
+        {% if is_paginated %}
+          <div style="display: flex; justify-content: center; align-items: center; gap: 1rem; padding: 1.5rem 0; font-size: 14px; color: #6b7280;">
+            {% if page_obj.has_previous %}
+              <a href="{{ request.path }}?page={{ page_obj.previous_page_number }}" style="color: #185FA5; text-decoration: none;">← previous</a>
+            {% endif %}
+            <span>Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+            {% if page_obj.has_next %}
+              <a href="{{ request.path }}?page={{ page_obj.next_page_number }}" style="color: #185FA5; text-decoration: none;">next →</a>
+            {% endif %}
+          </div>
+        {% endif %}
+      {% endblock pagination %}
     </div>
+
   </body>
 </html>

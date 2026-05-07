@@ -1,24 +1,29 @@
 {% extends "base_generic.html" %}
-<!-- Add additional CSS in static file -->
-{% load static %}
-<link rel="stylesheet" href="{% static 'css/styles.css' %}" />
-
 
 {% block content %}
-  <h1>TheBoard</h1>
-  <p>
-    Welcome to theboard, a website developed by
-    <em>David Marin</em>!
-  </p>
-  <h2>Dynamic content</h2>
-  <p>The library has the following record counts:</p>
-  <ul>
-    <li><strong>Total Events:</strong> {{ num_events }}</li>
-    <li><strong>Number of 'Sports' Events:</strong> {{ num_sport_events }}</li>
-    <li><strong>Number of 'Social' Events:</strong> {{ num_social_events }}</li>
-  </ul>
+<div style="max-width: 680px; margin: 0 auto; padding: 2rem 1rem;">
 
-  <p>
-    You have visited this page {{ num_visits }} time{{ num_visits|pluralize }}.
-  </p>
+  <div style="margin-bottom: 2rem;">
+    <h1 style="font-size: 28px; font-weight: 500; margin: 0 0 6px;">TheBoard</h1>
+    <p style="font-size: 14px; color: #6b7280; margin: 0;">Built by <em>David Marin</em> · You've visited {{ num_visits }} time{{ num_visits|pluralize }}</p>
+  </div>
+
+  <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 2rem;">
+    <div style="background: #f9fafb; border: 0.5px solid #e5e7eb; border-radius: 8px; padding: 1rem;">
+      <div style="font-size: 12px; color: #6b7280; margin-bottom: 4px;">Total events</div>
+      <div style="font-size: 26px; font-weight: 500; color: #111827;">{{ num_events }}</div>
+    </div>
+    <div style="background: #f9fafb; border: 0.5px solid #e5e7eb; border-radius: 8px; padding: 1rem;">
+      <div style="font-size: 12px; color: #6b7280; margin-bottom: 4px;">Sports</div>
+      <div style="font-size: 26px; font-weight: 500; color: #111827;">{{ num_sport_events }}</div>
+    </div>
+    <div style="background: #f9fafb; border: 0.5px solid #e5e7eb; border-radius: 8px; padding: 1rem;">
+      <div style="font-size: 12px; color: #6b7280; margin-bottom: 4px;">Social</div>
+      <div style="font-size: 26px; font-weight: 500; color: #111827;">{{ num_social_events }}</div>
+    </div>
+  </div>
+
+  <a href="{% url 'events' %}" style="display: inline-block; background: #185FA5; color: #fff; font-size: 14px; font-weight: 500; padding: 10px 20px; border-radius: 8px; text-decoration: none;">Browse all events</a>
+
+</div>
 {% endblock %}
