@@ -7,6 +7,7 @@ from django.views.generic import CreateView, UpdateView, DeleteView
 from django.views import generic
 from django.shortcuts import render
 from django.urls import reverse_lazy
+from django.utils import timezone
 from events.forms import forms, EventForm
 from .models import Event, Category
 
@@ -51,13 +52,18 @@ class EventListView(generic.ListView):
     # My own name for the list as a template var
     context_object_name = 'event_list'
 
-    # Note: You can customize this to be a specific query set. Be creative! ;-)
-    queryset = Event.objects.all()
+    # Note: This query is only for future events.
+    queryset = Event.objects.filter(
+        enddate__gte=timezone.now()
+    )
     # Template name goes along with the query set
     template_name = 'events/event_list.html'
 
 class EventDetailView(generic.DetailView):
     model = Event
+    queryset = Event.objects.filter(
+        enddate__gte=timezone.now()
+    )
 
 class EventCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     model = Event
