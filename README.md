@@ -5,6 +5,6 @@ theboard is an online bulletin board specifically for colleges. The project is c
 
 Attached are some of my files to the presentation I gave in class, along with my paper.
 
-Download theboard Presentation: [CS 331 - The Board - David Marin.pdf](https://github.com/user-attachments/files/27506894/CS.331.-.The.Board.-.David.Marin.pdf)
-Download thboard Paper: [CS 331 - theboard Project Paper - David Marin.pdf](https://github.com/user-attachments/files/27507874/CS.331.-.theboard.Project.Paper.-.David.Marin.pdf)
+* Download theboard Presentation: [CS 331 - The Board - David Marin.pdf](https://github.com/user-attachments/files/27506894/CS.331.-.The.Board.-.David.Marin.pdf)
+* Download thboard Paper: [CS 331 - theboard Project Paper - David Marin.pdf](https://github.com/user-attachments/files/27507874/CS.331.-.theboard.Project.Paper.-.David.Marin.pdf)
 
