@@ -10,6 +10,9 @@ class Category(models.Model):
     # Slug field is used for URLS like this: /categories/sports
     slug = models.SlugField(unique=True)
 
+    class Meta:
+        verbose_name_plural = "Categories"
+
     def __str__(self):
         return self.name
 

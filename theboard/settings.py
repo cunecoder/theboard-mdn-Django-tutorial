@@ -33,7 +33,7 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'django-insecure-&psk#na5l=p3q8
 # DEBUG = True
 DEBUG = os.environ.get('DJANGO_DEVUG', '') != 'False'
 
-ALLOWED_HOSTS = ['dmcunecoder.pythonanywhere.com', '127.0.0.1']
+ALLOWED_HOSTS = ['dmcunecoder.pythonanywhere.com', '127.0.0.1', 'localhost']
 
 
 # Application definition
@@ -152,6 +152,9 @@ if 'DATABASE_URL' in os.environ:
 # https://whitenoise.readthedocs.io/en/stable/django.html#add-compression-and-caching-support
 STORAGES = {
     # ...
+    "default": {
+        "BACKEND": "django.core.files.storage.FileSystemStorage",
+    },
     "staticfiles": {
         "BACKEND":
 "whitenoise.storage.CompressedManifestStaticFilesStorage",
