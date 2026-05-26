@@ -19,7 +19,7 @@ def index(request):
     #                 and then you pass it into the return render(...). On the html page, you can access the variables by how you named
     #                 them here by doing using DOUBLE curly brackets like so: {{ my_variable }}
     # Generate counts of some of the main objects
-    num_events = Event.objects.all().count()
+    num_events = Event.objects.all().filter(enddate__gte=timezone.now()).count()
 
     # Find the number of Events where the category is "Sports"
     num_sport_events = Event.objects.filter(category__name="Sports").count()
