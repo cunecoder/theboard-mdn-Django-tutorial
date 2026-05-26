@@ -157,3 +157,5 @@ STORAGES = {
 "whitenoise.storage.CompressedManifestStaticFilesStorage",
     },
 }
+
+CSRF_TRUSTED_ORIGINS = ['https://dmcunecoder.pythonanywhere.com']
