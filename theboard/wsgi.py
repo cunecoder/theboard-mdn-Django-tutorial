@@ -14,3 +14,6 @@ from django.core.wsgi import get_wsgi_application
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'theboard.settings')
 
 application = get_wsgi_application()
+
+# This line helps during the build phase for render deployment.
+app = application
