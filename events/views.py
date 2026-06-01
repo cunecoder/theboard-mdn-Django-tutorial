@@ -18,14 +18,26 @@ def index(request):
     # Personal Notes: This is how you get items from the database onto a page. You do your stuff here, any calcs and fncs (I think),
     #                 and then you pass it into the return render(...). On the html page, you can access the variables by how you named
     #                 them here by doing using DOUBLE curly brackets like so: {{ my_variable }}
-    # Generate counts of some of the main objects
-    num_events = Event.objects.all().filter(enddate__gte=timezone.now()).count()
+    
+    # Base query
+    events = Event.objects.all()
 
+    # Generate counts of some of the main objects
+    num_events = events.filter(
+        enddate__gte=timezone.now()
+    ).count()
+    
     # Find the number of Events where the category is "Sports"
-    num_sport_events = Event.objects.filter(category__name="Sports").count()
+    num_sport_events = events.filter(
+        enddate__gte=timezone.now(),
+        category__name="Sports"
+    ).count()
     
     # Number of Events where category is "Social"
-    num_social_events = Event.objects.filter(category__name="Social").count()
+    num_social_events = events.filter(
+        enddate__gte=timezone.now(),
+        category__name="Social"
+    ).count()
 
     # Number of visits to this view, as counted in the session variable.
     num_visits = request.session.get('num_visits', 0)
@@ -55,7 +67,7 @@ class EventListView(generic.ListView):
     # Note: This query is only for future events.
     queryset = Event.objects.filter(
         enddate__gte=timezone.now()
-    )
+    ).order_by('startdate')
     # Template name goes along with the query set
     template_name = 'events/event_list.html'
 

@@ -11,15 +11,15 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 
 from pathlib import Path
-from dotenv import load_dotenv
 import os # Needed for the registration templates and directories in the TEMPLATES list
+import dj_database_url
+from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-env_path = os.path.join(BASE_DIR, ".env")
-if os.path.exists(env_path):
-    load_dotenv(env_path)
+# This loads the variables from the .env file! Cool learning stuff!
+load_dotenv(BASE_DIR / '.env')
 
 
 # Quick-start development settings - unsuitable for production
@@ -33,7 +33,7 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'django-insecure-&psk#na5l=p3q8
 # DEBUG = True
 DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
 
-ALLOWED_HOSTS = ['dmcunecoder.pythonanywhere.com', '127.0.0.1', 'localhost']
+ALLOWED_HOSTS = ['dmcunecoder.pythonanywhere.com', '127.0.0.1', 'localhost', '*']
 
 
 # Application definition
@@ -45,6 +45,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'cloudinary',
+    'cloudinary_storage',
     # Adding events application
     'events'
 ]
@@ -83,11 +85,10 @@ WSGI_APPLICATION = 'theboard.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
+DATABASE_URL = os.getenv("DATABASE_URL")
+
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    "default": dj_database_url.config(default=DATABASE_URL, conn_max_age=600, conn_health_checks=True)
 }
 
 
@@ -131,34 +132,30 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 # The URL to use when referring to static files (where they will be served from)
 STATIC_URL = 'static/'
 
-# Redirect to home URL after login (Default redirects to /accounts/profile/)
-LOGIN_REDIRECT_URL = '/'
-
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-
-MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
-
-# Update database config from $DATABASE_URL environment varibale (if defined)
-import dj_database_url
-
-if 'DATABASE_URL' in os.environ:
-    DATABASES['default'] = dj_database_url.config(
-        conn_max_age=500,
-        conn_health_checks=True,
-    )
-
-# Static file serving.
+# The defualt part tells Django that the default place to store media assets is this (Cloudinary)
+# Static file serving is using whitenoise.
 # https://whitenoise.readthedocs.io/en/stable/django.html#add-compression-and-caching-support
 STORAGES = {
     # ...
     "default": {
-        "BACKEND": "django.core.files.storage.FileSystemStorage",
+        "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
     },
     "staticfiles": {
         "BACKEND":
 "whitenoise.storage.CompressedManifestStaticFilesStorage",
     },
 }
+
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': os.getenv('CLOUDINARY_CLOUD_NAME'),
+    'API_KEY': os.getenv('CLOUDINARY_API_KEY'),
+    'API_SECRET': os.getenv('CLOUDINARY_API_SECRET'),
+}
+
+
+# Redirect to home URL after login (Default redirects to /accounts/profile/)
+LOGIN_REDIRECT_URL = '/'
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 CSRF_TRUSTED_ORIGINS = ['https://dmcunecoder.pythonanywhere.com']
