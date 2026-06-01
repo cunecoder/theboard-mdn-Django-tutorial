@@ -33,7 +33,7 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'django-insecure-&psk#na5l=p3q8
 # DEBUG = True
 DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
 
-ALLOWED_HOSTS = ['dmcunecoder.pythonanywhere.com', '127.0.0.1', 'localhost', '*']
+ALLOWED_HOSTS = ['dmcunecoder.pythonanywhere.com', '127.0.0.1', 'localhost', 'https://theboard-94xf.onrender.com']
 
 
 # Application definition
