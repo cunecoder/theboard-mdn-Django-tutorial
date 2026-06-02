@@ -3,5 +3,5 @@ services:
     plan: free
     name: theboard
     runtime: python
-    buildCommand: '/build.sh'
+    buildCommand: './build.sh'
     startCommand: 'python -m gunicorn theboard.asgi:application -k uvicorn.workers.UvicornWorker'
