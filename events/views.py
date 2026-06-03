@@ -54,7 +54,7 @@ def index(request):
     }
 
     # Redner the HTML template index.html with the data in the context var
-    return render(request, 'index.html', context=context)
+    return render(request, 'pimar.html', context=context)
 
 class EventListView(generic.ListView):
     model = Event
